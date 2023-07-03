@@ -19,6 +19,7 @@ fun main() {
     val connect4 = Connect4(player1, player2, rows.toInt(), cols.toInt())
     println("$player1 VS $player2")
     println("${connect4.rows} X ${connect4.columns} board")
+    println(connect4.getBoard())
 }
 
 fun getBoardErrorMessage(boardString: String): String {
