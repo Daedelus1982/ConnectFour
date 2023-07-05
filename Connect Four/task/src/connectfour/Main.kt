@@ -19,7 +19,9 @@ fun main() {
     val connect4 = Connect4(player1, player2, rows.toInt(), cols.toInt())
     println("$player1 VS $player2")
     println("${connect4.rows} X ${connect4.columns} board")
-    println(connect4.getBoard())
+    println(connect4.gameBoard())
+    play(connect4)
+    println("Game over!")
 }
 
 fun getBoardErrorMessage(boardString: String): String {
@@ -30,4 +32,23 @@ fun getBoardErrorMessage(boardString: String): String {
         cols.toInt() !in 5..9 -> "Board columns should be from 5 to 9"
         else -> "Invalid Input"
     }
+}
+
+fun play(connect4: Connect4) {
+    do {
+        val input1 = getValid(connect4.player1, connect4)
+        if (input1 == "end") return else println(connect4.updateBoard('o', input1.toInt()))
+        val input2 = getValid(connect4.player2, connect4)
+        if (input2 == "end") return else println(connect4.updateBoard('*', input2.toInt()))
+    } while (true)
+}
+
+fun getValid(playerName: String, connect4: Connect4): String {
+    do {
+        println("$playerName's turn:")
+        var input = readln()
+        input = if (input == "end") return input else connect4.validInput(input)
+        if (input.any { !it.isDigit() }) println(input) else return input
+    } while (input.any { !it.isDigit() })
+    return "end"
 }
