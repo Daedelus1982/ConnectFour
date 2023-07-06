@@ -38,9 +38,20 @@ fun play(connect4: Connect4) {
     do {
         val input1 = getValid(connect4.player1, connect4)
         if (input1 == "end") return else println(connect4.updateBoard('o', input1.toInt()))
+        if (endGame(connect4, connect4.player1,'o')) return
         val input2 = getValid(connect4.player2, connect4)
         if (input2 == "end") return else println(connect4.updateBoard('*', input2.toInt()))
+        if (endGame(connect4,connect4.player2, '*')) return
     } while (true)
+}
+
+fun endGame(board: Connect4, player: String, token: Char): Boolean {
+    val str = if (board.hasWon(token)) "Player $player won" else if (board.isBoardFull()) "It is a draw" else "continue"
+    if (str != "continue") {
+        println(str)
+        return true
+    }
+    return false
 }
 
 fun getValid(playerName: String, connect4: Connect4): String {
