@@ -1,7 +1,14 @@
 package connectfour
 
-class Connect4(val player1: String, val player2: String, val rows: Int, val columns: Int) {
+data class Player(val name: String, val token: Char) {
+    var score = 0
+
+}
+
+class Connect4(val player1: Player, val player2: Player, val rows: Int, val columns: Int, val gameCount: Int) {
     private val gameState = MutableList(rows) { MutableList(columns) { ' ' } }
+    var gameNumber = 1
+
 
     fun gameBoard(): String {
         return buildString {
@@ -22,6 +29,10 @@ class Connect4(val player1: String, val player2: String, val rows: Int, val colu
         val row = nextFreeRow(column)
         gameState[row][column - 1] = token
         return gameBoard()
+    }
+
+    fun clearBoard() {
+        gameState.forEach { row -> row.indices.forEach { row[it] = ' ' } }
     }
 
     private fun nextFreeRow(column: Int): Int {
